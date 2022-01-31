@@ -11,7 +11,7 @@ export default function Layout({ children, home }: {children: React.ReactNode, h
   return (
     <div className={styles.container}>
       <Head>
-        <link rel="icon" href="/public/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
           content="Welcome to my website!"
@@ -30,7 +30,7 @@ export default function Layout({ children, home }: {children: React.ReactNode, h
           <>
             <Image
               priority
-              src="/public/images/profile.jpg"
+              src="/images/profile.jpg"
               className={utilStyles.borderCircle}
               height={144}
               width={144}
@@ -44,7 +44,7 @@ export default function Layout({ children, home }: {children: React.ReactNode, h
               <a>
                 <Image
                   priority
-                  src="/public/images/profile.jpg"
+                  src="/images/profile.jpg"
                   className={utilStyles.borderCircle}
                   height={108}
                   width={108}
