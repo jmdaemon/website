@@ -27,6 +27,7 @@ jobs:
         run: yarn ci
       - name: Install all dependencies
         run: yarn add classnames tailwindcss postcss-preset-env postcss-flexbugs-fixes sass date-fns gray-matter remark remark-html
+      - name: Install all dev dependencies
         run: yarn add --dev typescript @types/react @types/node
       - name: Build project
         run: yarn run build
