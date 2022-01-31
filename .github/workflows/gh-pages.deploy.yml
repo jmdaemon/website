@@ -24,15 +24,15 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install all dependencies
-        run: yarn add classnames tailwindcss postcss-preset-env postcss-flexbugs-fixes sass date-fns gray-matter remark remark-html
+        run: yarn add  --immutable --immutable-cache --check-cache classnames tailwindcss postcss-preset-env postcss-flexbugs-fixes sass date-fns gray-matter remark remark-html
       - name: Install all dev dependencies
-        run: yarn add --dev typescript @types/react @types/node
+        run: yarn add  --immutable --immutable-cache --check-cache --dev typescript @types/react @types/node
       - name: Build project
         run: yarn next build
       - name: Export static files
         run: yarn next export
       - name: Add .nojekyll file
-        run: touch ./out/.nojekyll
+        run: touch ./out/.nojekyll && touch ./out/_next/.nojekyll
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
