@@ -28,9 +28,9 @@ jobs:
       - name: Install all dev dependencies
         run: yarn add --dev typescript @types/react @types/node
       - name: Build project
-        run: yarn run build
+        run: yarn next build
       - name: Export static files
-        run: yarn run export
+        run: yarn next export
       - name: Add .nojekyll file
         run: touch ./out/.nojekyll
       - name: Deploy
