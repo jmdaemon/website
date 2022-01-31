@@ -3,7 +3,6 @@ import Image from 'next/image'
 import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
-import { prefix } from '../prefix.js';
 
 const name = 'Joseph Diza'
 export const siteTitle = 'Welcome to my Website'
@@ -12,7 +11,7 @@ export default function Layout({ children, home }: {children: React.ReactNode, h
   return (
     <div className={styles.container}>
       <Head>
-        <link rel="icon" href={`${prefix}/public/favicon.ico`} />
+        <link rel="icon" href="/public/favicon.ico" />
         <meta
           name="description"
           content="Welcome to my website!"
@@ -31,7 +30,7 @@ export default function Layout({ children, home }: {children: React.ReactNode, h
           <>
             <Image
               priority
-              src={`${prefix}/public/images/profile.jpg`}
+              src="/public/images/profile.jpg"
               className={utilStyles.borderCircle}
               height={144}
               width={144}
@@ -45,7 +44,7 @@ export default function Layout({ children, home }: {children: React.ReactNode, h
               <a>
                 <Image
                   priority
-                  src={`${prefix}/public/images/profile.jpg`}
+                  src="/public/images/profile.jpg"
                   className={utilStyles.borderCircle}
                   height={108}
                   width={108}
