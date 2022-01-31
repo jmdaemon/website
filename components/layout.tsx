@@ -13,7 +13,7 @@ export default function Layout({ children, home }: {children: React.ReactNode, h
   return (
     <div className={styles.container}>
       <Head>
-        <link rel="icon" href={`${prefix}/favicon.ico`} />
+        <link rel="icon" href={`/${prefix}/favicon.ico`} />
         <meta
           name="description"
           content="Welcome to my website!"
