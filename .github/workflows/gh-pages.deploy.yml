@@ -38,7 +38,7 @@ jobs:
       - name: Make Subprojects Dir
         run: mkdir subprojects
       - name: Clone Resume Repository
-        run: git clone https://github.com/jmdaemon/cv subprojects && cd subprojects/cv
+        run: git clone https://github.com/jmdaemon/cv subprojects/cv && cd subprojects/cv
       - name: Build Resume
         uses: xu-cheng/latex-action@v2
         with:
