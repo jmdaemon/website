@@ -43,7 +43,7 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           args: "--output-directory build -pdf -file-line-error -halt-on-error -interaction=nonstopmode"
-          root_file: cv.tex
+          root_file: subprojects/cv/cv.tex
       - name: Copy Resume to output directory
         run: cd ../.. && cp subprojects/cv/build/cv.pdf ./out/public/
       - name: Deploy
