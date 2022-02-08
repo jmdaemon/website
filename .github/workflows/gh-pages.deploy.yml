@@ -42,6 +42,7 @@ jobs:
       - name: Build Resume
         uses: xu-cheng/latex-action@v2
         with:
+          compiler: "pdflatex"
           args: "--output-directory build -pdf -file-line-error -halt-on-error -interaction=nonstopmode"
           root_file: subprojects/cv/cv.tex
       - name: Copy Resume to output directory
