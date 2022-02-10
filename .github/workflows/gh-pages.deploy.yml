@@ -44,6 +44,7 @@ jobs:
         with:
           compiler: "pdflatex"
           args: "--output-directory build -pdf"
+          working_directory: "subprojects/cv"
           root_file: cv.tex
       - name: Copy Resume to output directory
         run: cd ../.. && cp subprojects/cv/build/cv.pdf ./out/public/
