@@ -49,10 +49,10 @@ jobs:
         run: yarn install
 
       - name: Build project
-        run: yarn run build
+        run: yarn run next build
 
       - name: Export static files
-        run: yarn run export
+        run: yarn run next export
 
   setup-latex:
     runs-on: ubuntu-latest
