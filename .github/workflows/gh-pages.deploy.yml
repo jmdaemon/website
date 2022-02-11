@@ -1,13 +1,11 @@
 name: Deploy to GitHub Pages
 
-
 on:
   push:
-    branches: [master]
-
+    branches: [master, cache-ci-builds]
 
 jobs:
-  build:
+  setup-yarn:
     runs-on: ubuntu-latest
 
     env:
@@ -17,25 +15,37 @@ jobs:
       matrix:
         node-version: [17.x]
 
+    # Caches 
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
 
+    - uses: actions/cache@v2
+      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      with:
+        path: |
+          ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          ${{ github.workspace }}/.next/cache
+        key: |
+          ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+          ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+    - name: Install all dependencies
+      run: yarn add  --immutable --immutable-cache --check-cache classnames tailwindcss postcss-preset-env postcss-flexbugs-fixes sass date-fns gray-matter remark remark-html
+    - name: Install all dev dependencies
+      run: yarn add  --immutable --immutable-cache --check-cache --dev typescript @types/react @types/node
+    - name: Build project
+      run: yarn next build
+    - name: Export static files
+      run: yarn next export
+
+  setup-latex:
+    runs-on: ubuntu-latest
     steps:
-      - name: Get files
-        uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install all dependencies
-        run: yarn add  --immutable --immutable-cache --check-cache classnames tailwindcss postcss-preset-env postcss-flexbugs-fixes sass date-fns gray-matter remark remark-html
-      - name: Install all dev dependencies
-        run: yarn add  --immutable --immutable-cache --check-cache --dev typescript @types/react @types/node
-      - name: Build project
-        run: yarn next build
-      - name: Export static files
-        run: yarn next export
-      - name: Add .nojekyll file
-        run: touch ./out/.nojekyll && touch ./out/_next/.nojekyll
-      - name: Make Subprojects Dir
+      - name: Make Subprojects Directory
         run: mkdir subprojects
       - name: Clone Resume Repository
         run: git clone https://github.com/jmdaemon/cv subprojects/cv
@@ -45,10 +55,18 @@ jobs:
           args: "-output-directory=build -pdf -verbose -shell-escape -file-line-error -synctex=1 -interaction=nonstopmode"
           working_directory: "subprojects/cv"
           root_file: cv.tex
-      - name: "List directory"
-        run: ls -al && ls -al subprojects && ls -al subprojects/cv
+
+  build:
+    needs: setup-yarn, setup-latex
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add .nojekyll file
+        run: touch ./out/.nojekyll && touch ./out/_next/.nojekyll
+
       - name: Copy Resume to output directory
         run: cp ./subprojects/cv/build/cv.pdf out
+        
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
