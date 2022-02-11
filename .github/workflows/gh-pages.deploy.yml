@@ -34,16 +34,14 @@ jobs:
             ${{ runner.os }}-yarn-
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
-      - name: Install all dependencies
-        run: yarn add  --immutable --immutable-cache --check-cache classnames tailwindcss postcss-preset-env postcss-flexbugs-fixes sass date-fns gray-matter remark remark-html
-      - name: Install all dev dependencies
-        run: yarn add  --immutable --immutable-cache --check-cache --dev typescript @types/react @types/node
+      - name: Install dependencies
+        run: yarn install
 
       - name: Build project
-        run: yarn build
+        run: yarn run build
 
       - name: Export static files
-        run: yarn export
+        run: yarn run export
 
   setup-latex:
     runs-on: ubuntu-latest
