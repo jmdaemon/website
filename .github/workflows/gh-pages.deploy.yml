@@ -42,6 +42,7 @@ jobs:
       - name: Build Resume
         uses: xu-cheng/latex-action@v2
         with:
+          compiler: "pdflatex"
           args: "--output-directory build -pdf"
           working_directory: "subprojects/cv"
           root_file: cv.tex
