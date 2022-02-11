@@ -73,6 +73,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: List directory
+        run: ls -al
       - name: Add .nojekyll file
         run: touch ./out/.nojekyll && touch ./out/_next/.nojekyll
 
