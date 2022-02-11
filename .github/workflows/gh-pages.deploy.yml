@@ -45,8 +45,10 @@ jobs:
           args: "-output-directory=subprojects/cv/build -pdf -verbose -shell-escape -file-line-error -synctex=1 -interaction=nonstopmode"
           working_directory: "subprojects/cv"
           root_file: cv.tex
+      - name: "List directory"
+        run: ls -al 
       - name: Copy Resume to output directory
-        run: cp subprojects/cv/build/cv.pdf ./out/public/
+        run: cd ../../ && cp subprojects/cv/build/cv.pdf ./out/public/
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
