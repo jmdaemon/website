@@ -38,16 +38,15 @@ jobs:
       - name: Make Subprojects Dir
         run: mkdir subprojects
       - name: Clone Resume Repository
-        run: git clone https://github.com/jmdaemon/cv subprojects/cv && cd subprojects/cv
+        run: git clone https://github.com/jmdaemon/cv subprojects/cv
       - name: Build Resume
         uses: xu-cheng/latex-action@v2
         with:
-          compiler: "pdflatex"
           args: "--output-directory build -pdf"
           working_directory: "subprojects/cv"
           root_file: cv.tex
       - name: Copy Resume to output directory
-        run: cd ../.. && cp subprojects/cv/build/cv.pdf ./out/public/
+        run: cp subprojects/cv/build/cv.pdf ./out/public/
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
