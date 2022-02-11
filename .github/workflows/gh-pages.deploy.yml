@@ -46,9 +46,9 @@ jobs:
           working_directory: "subprojects/cv"
           root_file: cv.tex
       - name: "List directory"
-        run: ls -al 
+        run: ls -al subprojects && ls -al subprojects/cv
       - name: Copy Resume to output directory
-        run: cd ../../ && cp subprojects/cv/build/cv.pdf ./out/public/
+        run: cp ./subprojects/cv/build/cv.pdf ./out/public/
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
