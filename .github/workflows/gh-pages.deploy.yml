@@ -15,7 +15,6 @@ jobs:
     strategy:
       matrix:
         node-version: [17.x]
-        # Caches -
 
     steps:
       - name: Get yarn cache directory path
@@ -39,10 +38,12 @@ jobs:
         run: yarn add  --immutable --immutable-cache --check-cache classnames tailwindcss postcss-preset-env postcss-flexbugs-fixes sass date-fns gray-matter remark remark-html
       - name: Install all dev dependencies
         run: yarn add  --immutable --immutable-cache --check-cache --dev typescript @types/react @types/node
+
       - name: Build project
-        run: yarn next build
+        run: yarn build
+
       - name: Export static files
-        run: yarn next export
+        run: yarn export
 
   setup-latex:
     runs-on: ubuntu-latest
