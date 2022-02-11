@@ -5,7 +5,8 @@ on:
     branches: [master, cache-ci-builds]
 
 jobs:
-  setup-yarn:
+
+  setup_yarn:
     runs-on: ubuntu-latest
 
     env:
@@ -42,7 +43,7 @@ jobs:
     - name: Export static files
       run: yarn next export
 
-  setup-latex:
+  setup_latex:
     runs-on: ubuntu-latest
     steps:
       - name: Make Subprojects Directory
