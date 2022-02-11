@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  setup_yarn:
+  setup-yarn:
     runs-on: ubuntu-latest
 
     env:
@@ -15,35 +15,36 @@ jobs:
     strategy:
       matrix:
         node-version: [17.x]
+        # Caches -
 
-    # Caches 
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
+    steps:
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
-    - uses: actions/cache@v2
-      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: |
-          ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          ${{ github.workspace }}/.next/cache
-        key: |
-          ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-          ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            ${{ github.workspace }}/.next/cache
+          key: |
+            ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
-    - name: Install all dependencies
-      run: yarn add  --immutable --immutable-cache --check-cache classnames tailwindcss postcss-preset-env postcss-flexbugs-fixes sass date-fns gray-matter remark remark-html
-    - name: Install all dev dependencies
-      run: yarn add  --immutable --immutable-cache --check-cache --dev typescript @types/react @types/node
-    - name: Build project
-      run: yarn next build
-    - name: Export static files
-      run: yarn next export
+      - name: Install all dependencies
+        run: yarn add  --immutable --immutable-cache --check-cache classnames tailwindcss postcss-preset-env postcss-flexbugs-fixes sass date-fns gray-matter remark remark-html
+      - name: Install all dev dependencies
+        run: yarn add  --immutable --immutable-cache --check-cache --dev typescript @types/react @types/node
+      - name: Build project
+        run: yarn next build
+      - name: Export static files
+        run: yarn next export
 
-  setup_latex:
+  setup-latex:
     runs-on: ubuntu-latest
     steps:
       - name: Make Subprojects Directory
@@ -58,7 +59,7 @@ jobs:
           root_file: cv.tex
 
   build:
-    needs: setup-yarn, setup-latex
+    needs: [setup-yarn, setup-latex]
     runs-on: ubuntu-latest
 
     steps:
