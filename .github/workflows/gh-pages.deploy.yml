@@ -42,7 +42,7 @@ jobs:
       - name: Build Resume
         uses: xu-cheng/latex-action@v2
         with:
-          args: "-output-directory='build' -pdf -verbose -shell-escape -file-line-error -synctex=1 -interaction=nonstopmode"
+          args: "-output-directory=subprojects/cv/build -pdf -verbose -shell-escape -file-line-error -synctex=1 -interaction=nonstopmode"
           working_directory: "subprojects/cv"
           root_file: cv.tex
       - name: Copy Resume to output directory
