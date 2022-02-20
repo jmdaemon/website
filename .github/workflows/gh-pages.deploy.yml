@@ -59,7 +59,9 @@ jobs:
         with:
           name: site-output
           #path: out
-          path: .
+          path: |
+            .
+            !node_modules
           retention-days: 1
 
       #- name: Share site build artifacts
