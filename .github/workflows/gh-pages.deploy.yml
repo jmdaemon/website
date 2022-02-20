@@ -54,6 +54,13 @@ jobs:
       - name: Export static files
         run: yarn run next export
 
+      - name: Share site build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: site-output
+          path: out
+          retention-days: 1
+
   setup-latex:
     runs-on: ubuntu-latest
     steps:
@@ -68,18 +75,38 @@ jobs:
           working_directory: "subprojects/cv"
           root_file: cv.tex
 
+      - name: Share CV
+        uses: actions/upload-artifact@v2
+        with:
+          name: cv
+          path: subprojects/cv/build/cv.pdf
+          retention-days: 1
+
   build:
     needs: [setup-yarn, setup-latex]
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Retrieve latest website build
+        uses: actions/download-artifact@v2
+        with:
+          name: site-output
+          path: out
+
+      - name: Retrieve latest CV build
+        uses: actions/download-artifact@v2
+        with:
+          name: cv
+          path: out
+
       - name: List directory
         run: ls -al
       - name: Add .nojekyll file
         run: touch ./out/.nojekyll && touch ./out/_next/.nojekyll
 
-      - name: Copy Resume to output directory
-        run: cp ./subprojects/cv/build/cv.pdf out
+      #- name: Copy Resume to output directory
+        #run: cp ./subprojects/cv/build/cv.pdf out
         
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.1
