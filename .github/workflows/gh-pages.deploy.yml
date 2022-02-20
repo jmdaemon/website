@@ -58,8 +58,16 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: site-output
-          path: out
+          #path: out
+          path: .
           retention-days: 1
+
+      #- name: Share site build artifacts
+        #uses: actions/upload-artifact@v2
+        #with:
+          #name: site-output
+          #path: out
+          #retention-days: 1
 
   setup-latex:
     runs-on: ubuntu-latest
@@ -92,7 +100,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: site-output
-          path: out
+          #path: out
 
       - name: Retrieve latest CV build
         uses: actions/download-artifact@v2
